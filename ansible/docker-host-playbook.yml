@@ -1,0 +1,41 @@
+---
+- hosts: all
+  become: yes
+
+  pre_tasks:
+    - name: install epel
+      yum:
+        name: epel-release
+        state: installed
+
+    - name: install yum-utils
+      yum:
+        name: yum-utils
+        state: installed
+
+    - name: install device-mapper-persistent-data
+      yum:
+        name: device-mapper-persistent-data
+        state: installed
+
+    - name: install lvm2
+      yum:
+        name: lvm2
+        state: installed
+
+    - name: add repository
+      shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+    - name: update packages
+      yum:
+        name: '*'
+        state: latest
+
+  tasks:
+    - name: install docker
+      yum:
+        name: docker-ce
+        state: installed
+
+    - name: start docker
+      shell: systemctl start docker
