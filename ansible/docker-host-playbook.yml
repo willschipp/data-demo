@@ -37,5 +37,14 @@
         name: docker-ce
         state: installed
 
+    - name: docker group
+      shell: usermod -aG docker vagrant
+
     - name: start docker
       shell: systemctl start docker
+
+    - name: install docker-compose
+      shell: curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+
+    - name: update docker-compose
+      shell: chmod +x /usr/local/bin/docker-compose
