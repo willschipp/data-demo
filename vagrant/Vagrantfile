@@ -3,15 +3,41 @@ Vagrant.configure("2") do |config|
 
   config.ssh.insert_key = false
 
-  config.vm.network "public_network"
+  config.vm.synced_folder "../scripts/dns", "/vagrant/dns", type: "rsync"
+
+  config.vm.network "forwarded_port",
+    guest: 80, host: 80
+
+  config.vm.network "forwarded_port",
+    guest: 123, host: 123
+
+  config.vm.network "forwarded_port",
+    guest: 389, host: 389
+
+    config.vm.network "forwarded_port",
+      guest: 443, host: 443
+
+  config.vm.network "forwarded_port",
+    guest: 8500, host: 8500
+
+  config.vm.network "forwarded_port",
+    guest: 8600, host: 8600, protocol: "udp"
+
 
   config.vm.provision "shell",
     inline: "sudo yum install -y ansible"
 
   config.vm.provision "file",
     source: "../ansible/docker-host-playbook.yml", destination: "/vagrant/docker-host-playbook.yml"
+
   config.vm.provision "file",
     source: "../docker/docker-compose.yml",destination: "/vagrant/docker-compose.yml"
+
+  config.vm.provision "file",
+    source: "../scripts/dns.sh",destination: "/vagrant/dns.sh"
+
+  # config.vm.provision "file",
+  #   source: "../scripts/dns",destination: "/vagrant/dns"
 
   config.vm.provision "ansible_local" do |ansible|
     ansible.verbose = "v"
@@ -19,5 +45,12 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "shell",
-    inline: "docker-compose -d -f /vagrant/docker-compose.yml"
+    inline: "/usr/local/bin/docker-compose -f /vagrant/docker-compose.yml up -d"
+
+  config.vm.provision "shell",
+    inline: "chmod a+x /vagrant/dns.sh"
+
+  config.vm.provision "shell",
+    inline: "/vagrant/dns.sh"
+
 end
