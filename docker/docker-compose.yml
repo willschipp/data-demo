@@ -18,17 +18,16 @@ services:
   consul:
     image: consul
     ports:
-      - 8600:8600
+      - 8600:8600/udp
       - 8500:8500
-  ntp:
-    image: cloudwattfr/ntpserver
-    ports:
-      - 123:123
-  ldap:
-    image: osixia/openldap:1.1.9
-    ports:
-      - 389:389
-    environment:
-      - LDAP_ORGANIZATION="Network International"
-      - LDAP_DOMAIN="network.ae"
-      - LDAP_ADMIN_PASSWORD="welcome"
+  # ntp:
+  #   image: cloudwattfr/ntpserver
+  #   ports:
+  #     - 123:123
+  # ldap:
+  #   image: osixia/openldap:1.1.8
+  #   ports:
+  #     - 389:389
+  # ldapadmin:
+  #   image: osixia/phpldapadmin:0.7.0
+  #   ports:

@@ -1,0 +1,11 @@
+{
+  "ID": "ldap1",
+  "Name": "ldap",
+  "Tags": [
+    "primary",
+    "v1"
+  ],
+  "Address": "127.0.0.1",
+  "Port": 389,
+  "EnableTagOverride": false
+}

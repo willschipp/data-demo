@@ -1,0 +1,11 @@
+{
+  "ID": "ntp1",
+  "Name": "ntp",
+  "Tags": [
+    "primary",
+    "v1"
+  ],
+  "Address": "127.0.0.1",
+  "Port": 123,
+  "EnableTagOverride": false
+}

@@ -26,11 +26,6 @@
     - name: add repository
       shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
-    - name: update packages
-      yum:
-        name: '*'
-        state: latest
-
   tasks:
     - name: install docker
       yum:
@@ -48,3 +43,6 @@
 
     - name: update docker-compose
       shell: chmod +x /usr/local/bin/docker-compose
+
+    # - name: start docker compose
+    #   shell: "/usr/local/bin/docker-compose -f /vagrant/docker-compose.yml up -d"
