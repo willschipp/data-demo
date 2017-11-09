@@ -44,5 +44,13 @@
     - name: update docker-compose
       shell: chmod +x /usr/local/bin/docker-compose
 
-    # - name: start docker compose
-    #   shell: "/usr/local/bin/docker-compose -f /vagrant/docker-compose.yml up -d"
+    - name: start docker compose
+      shell: "/usr/local/bin/docker-compose -f /vagrant/docker-compose.yml up -d"
+
+    # - name: add dns entries
+    #   uri:
+    #     urls: http://localhost:8500/v1/agent/service/register
+    #     method: PUT
+    #     body: "{{lookup('file','/vagrant/ldap.json')}}"
+    #     body_format: json
+    #     HEADER_Content-type: "application/json"

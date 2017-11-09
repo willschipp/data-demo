@@ -33,4 +33,12 @@
 
 ## end goal
 
-- locally exposed services (NTP, DNS, LDAP) 
+- locally exposed services (NTP, DNS, LDAP)
+
+## delegation of responsibilities
+
+| Component | Responsibility | Rationale |
+|-----------|----------------|-----------|
+| Vagrant | bringing up a server environment | specific to environment only |
+| Ansible | configuring required docker host | can be used either locally of with a one or more remote targets and independently of vagrant|
+| Docker Compose | deploying and actioning environment | runs against a docker host, independent of how that host stood up |
