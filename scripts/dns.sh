@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for file in /vagrant/dns/*
+for file in /vagrant/scripts/dns/*
 do
-  curl -XPUT http://localhost:8500/v1/agent/service/register -d @/vagrant/dns/$file
+  curl -XPUT http://localhost:8500/v1/agent/service/register -d @$file
 done

@@ -20,14 +20,15 @@ services:
     ports:
       - 8600:8600/udp
       - 8500:8500
-  # ntp:
-  #   image: cloudwattfr/ntpserver
-  #   ports:
-  #     - 123:123
-  # ldap:
-  #   image: osixia/openldap:1.1.8
-  #   ports:
-  #     - 389:389
-  # ldapadmin:
-  #   image: osixia/phpldapadmin:0.7.0
-  #   ports:
+    # exec:
+    #   - docker exec consul curl -XPUT http://localhost:8500/v1/agent/service/register -d @ldap.json
+      # - docker exec consul curl -XPUT http://localhost:8500/v1/agent/service/register -d "{\"ID\": \"ldap1\",\"Name\"\: \"ldap\",\"Address\"\: \"127.0.0.1\",\"Port\"\: 389}"
+      # - docker exec consul curl -XPUT http://localhost:8500/v1/agent/service/register -d "{\"ID\": \"ntp1\",\"Name\": \"ntp\",\"Address\": \"127.0.0.1\",\"Port\": 123}"
+  ntp:
+    image: cloudwattfr/ntpserver
+    ports:
+      - 8123:123
+  ldap:
+    image: openmicroscopy/apacheds
+    ports:
+      - 389:10389

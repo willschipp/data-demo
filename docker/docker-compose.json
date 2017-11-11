@@ -1,0 +1,14 @@
+{ "version": "3",
+  "services":{
+    "consul":{
+      "image":"consul",
+      "ports":[
+        "8600":"8600/udp",
+        "8500":"8500"
+      ],
+      "onrun":[
+        "docker exec consul curl -XPUT 'http://localhost:8500/v1/agent/service/register' -d @ldap.json"
+      ]
+    }
+  }
+}

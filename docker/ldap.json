@@ -1,0 +1,6 @@
+{
+  "ID": "ldap1",
+  "Name": "ldap",
+  "Address": "127.0.0.1",
+  "Port": 389
+}
