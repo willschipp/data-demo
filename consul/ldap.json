@@ -1,0 +1,9 @@
+{
+  "service": {
+    "name": "ldap",
+    "tags": [
+       "apacheds"
+    ],
+    "port": 389
+    }
+  }

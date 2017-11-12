@@ -1,0 +1,43 @@
+---
+- hosts: all
+  become: yes
+
+  pre_tasks:
+    - name: install epel
+      yum:
+        name: epel-release
+        state: installed
+
+    - name: install deps (RHEL)
+      yum: >
+        pkg={{item}}
+        state=installed
+      with_items:
+        - unzip
+        - jq
+      # when: ansible_os_family == "RedHat"
+
+  tasks:
+    - name: download consul
+      get_url:
+        url: https://releases.hashicorp.com/consul/1.0.0/consul_1.0.0_linux_amd64.zip
+        dest: /tmp
+
+    - name: extract consul
+      unarchive:
+        src: /tmp/consul_1.0.0_linux_amd64.zip
+        dest: /usr/local/bin
+        remote_src: yes
+
+    - name: make service directory
+      file:
+        path: /etc/consul.d
+        state: directory
+
+    - name: copy services into the directory
+      fetch:
+        src: /tmp/consul/ldap.json
+        dest: /etc/consul.d/ldap.json
+
+    - name: start consul
+      shell: nohup /usr/local/bin/consul agent -dev -config-dir=/etc/consul.d -client=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')&

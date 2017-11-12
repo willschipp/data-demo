@@ -8,11 +8,11 @@ Vagrant.configure("2") do |config|
   # config.vm.network "forwarded_port",
   #   guest: 80, host: 80
 
-  config.vm.network "forwarded_port",
-    guest: 123, host: 123
-
-  config.vm.network "forwarded_port",
-    guest: 389, host: 389
+  # config.vm.network "forwarded_port",
+  #   guest: 123, host: 123
+  #
+  # config.vm.network "forwarded_port",
+  #   guest: 389, host: 389
 
   # config.vm.network "forwarded_port",
   #   guest: 443, host: 443
@@ -23,17 +23,21 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port",
     guest: 8600, host: 8600, protocol: "udp"
 
-    config.vm.network "forwarded_port",
-      guest: 8080, host: 8080
+  # config.vm.network "forwarded_port",
+  #   guest: 8080, host: 8080
 
   config.vm.provision "shell",
     inline: "sudo yum install -y ansible"
 
   config.vm.provision "file",
-    source: "../ansible/docker-host-playbook.yml", destination: "/vagrant/docker-host-playbook.yml"
+    source: "../consul", destination: "/tmp/"
+
 
   config.vm.provision "file",
-    source: "../docker/docker-compose.yml",destination: "/vagrant/docker-compose.yml"
+    source: "../ansible/non-docker-playbook.yml", destination: "/vagrant/non-docker-playbook.yml"
+
+  # config.vm.provision "file",
+  #   source: "../docker/docker-compose.yml",destination: "/vagrant/docker-compose.yml"
 
   # config.vm.provision "file",
   #   source: "../scripts",destination: "/vagrant/scripts"
@@ -43,7 +47,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "ansible_local" do |ansible|
     ansible.verbose = "v"
-    ansible.playbook = "./docker-host-playbook.yml"
+    ansible.playbook = "./non-docker-playbook.yml"
   end
 
   # TODO - need to move this out of vagrant and into docker-compose
