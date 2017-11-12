@@ -42,3 +42,8 @@
 | Vagrant | bringing up a server environment | specific to environment only |
 | Ansible | configuring required docker host | can be used either locally of with a one or more remote targets and independently of vagrant|
 | Docker Compose | deploying and actioning environment | runs against a docker host, independent of how that host stood up |
+
+
+## deployment
+
+- install dnsmasq locally on mac to have \*.consul point to the consul server

@@ -1,0 +1,4 @@
+ldap:
+  server:
+    url: ldap://ldap.service.consul:10389/dc=example,dc=com
+    
