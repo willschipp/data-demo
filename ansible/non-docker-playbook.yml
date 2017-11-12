@@ -15,9 +15,14 @@
       with_items:
         - unzip
         - jq
+        - java-1.8.0-openjdk-devel
       # when: ansible_os_family == "RedHat"
 
+  # roles:
+  #   - role: nginx
+
   tasks:
+    #consul
     - name: download consul
       get_url:
         url: https://releases.hashicorp.com/consul/1.0.0/consul_1.0.0_linux_amd64.zip
@@ -35,9 +40,23 @@
         state: directory
 
     - name: copy services into the directory
-      fetch:
+      copy:
         src: /tmp/consul/ldap.json
-        dest: /etc/consul.d/ldap.json
+        dest: /etc/consul.d/
 
     - name: start consul
       shell: nohup /usr/local/bin/consul agent -dev -config-dir=/etc/consul.d -client=$(ip addr show eth0 | grep -Po 'inet \K[\d.]+')&
+
+    #ldap
+    - name: download apacheds
+      get_url:
+        url: http://www-eu.apache.org/dist/directory/apacheds/dist/2.0.0-M24/apacheds-2.0.0-M24-x86_64.rpm
+        dest: /tmp
+
+    - name: install apacheds
+      yum:
+        name: /tmp/apacheds-2.0.0-M24-x86_64.rpm
+        state: present
+
+    - name: start apacheds
+      shell: /etc/init.d/apacheds-2.0.0_M24-default start
