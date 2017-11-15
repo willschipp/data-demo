@@ -33,8 +33,11 @@ Vagrant.configure("2") do |config|
     source: "../consul", destination: "/tmp/"
 
 
+  # config.vm.provision "file",
+  #   source: "../ansible/non-docker-playbook.yml", destination: "/vagrant/non-docker-playbook.yml"
+
   config.vm.provision "file",
-    source: "../ansible/non-docker-playbook.yml", destination: "/vagrant/non-docker-playbook.yml"
+    source: "../ansible/script-playbook.yml", destination: "/vagrant/script-playbook.yml"
 
   # config.vm.provision "file",
   #   source: "../docker/docker-compose.yml",destination: "/vagrant/docker-compose.yml"
@@ -47,7 +50,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "ansible_local" do |ansible|
     ansible.verbose = "v"
-    ansible.playbook = "./non-docker-playbook.yml"
+    ansible.playbook = "./script-playbook.yml"
   end
 
   # TODO - need to move this out of vagrant and into docker-compose

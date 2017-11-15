@@ -1,0 +1,41 @@
+---
+- hosts: all
+  become: yes
+
+  pre_tasks:
+    - name: install epel
+      yum:
+        name: epel-release
+        state: installed
+
+    - name: install deps (RHEL)
+      yum: >
+        pkg={{item}}
+        state=installed
+      with_items:
+        - unzip
+        - jq
+        - java-1.8.0-openjdk-devel
+        - wget
+      # when: ansible_os_family == "RedHat"
+
+  # roles:
+  #   - role: nginx
+
+  tasks:
+    #database
+    - name: download mysql
+      get_url:
+        url: http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+        dest: /tmp
+
+    - name: update repo
+      shell: rpm -ivh /tmp/mysql-community-release-el7-5.noarch.rpm
+
+    - name: install mysql
+      yum:
+        name: mysql-server
+        state: present
+
+    - name: start mysql
+      shell: systemctl start mysqld
